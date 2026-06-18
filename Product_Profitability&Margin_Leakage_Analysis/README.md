@@ -5,11 +5,11 @@
 
 ## Project Overview
  
-Proyek ini meneliti apakah revenue yang tinggi benar-benar berujung pada profitabilitas yang tinggi dalam bisnis ritel serta di mana terjadinya kebocoran laba di berbagai kategori produk dan segmen pelanggan.
+This project examines whether high revenue actually leads to high profitability in the retail business, as well as where profit leakage occurs across various product categories and customer segments.
 
-**Main Business Problem:** Manajemen mengalokasikan sumber daya berdasarkan kinerja pendapatan, bukan profitabilitas. Tanpa memahami kontribusi laba sesungguhnya per kategori dan segmen, bisnis berisiko melakukan investasi berlebihan di bidang-bidang yang justru mengikis margin.
+**Main Business Problem:** Management allocates resources based on revenue performance, not profitability. Without understanding the actual profit contribution by category and segment, a business risks overinvesting in areas that actually erode margins.
 
-**Objective:** Identifikasi kategori dan segmen pelanggan yang menjadi pendorong laba riil, ukur sumber-sumber kebocoran (diskon & ongkos kirim), serta deteksi risiko konsentrasi pada tingkat produk.
+**Objective:** Identify the customer categories and segments that drive actual profit, measure sources of revenue leakage (discounts and shipping costs), and detect concentration risk at the product level.
 
 ---
  
@@ -31,28 +31,28 @@ Proyek ini meneliti apakah revenue yang tinggi benar-benar berujung pada profita
  
 | Column | Data Type | Description | Notes |
 |---|---|---|---|
-| Order No | VARCHAR | Unique order identifier | 1 order bisa multi-row (multi-item) |
-| Order Date | DATE | Tanggal order dibuat | Format: YYYY/MM/DD |
-| Ship Date | DATE | Tanggal pengiriman | |
-| Customer Name | VARCHAR | Nama customer | |
-| City | VARCHAR | Kota customer | |
+| Order No | VARCHAR | Unique order identifier | 1 order can be multi-row (multi-item) |
+| Order Date | DATE | Date the order was created | Format: YYYY/MM/DD |
+| Ship Date | DATE | Shipping date | |
+| Customer Name | VARCHAR | Customer name | |
+| City | VARCHAR | Customer city | |
 | State | VARCHAR | State (NSW / VIC) | |
-| Customer Type | VARCHAR | Segmen customer | Corporate, Consumer, Home Office, Small Business |
+| Customer Type | VARCHAR | Customer segment | Corporate, Consumer, Home Office, Small Business |
 | Account Manager | VARCHAR | Sales representative | |
-| Order Priority | VARCHAR | Prioritas order | Low, Medium, High, Critical |
-| Product Name | VARCHAR | Nama produk | |
-| Product Category | VARCHAR | Kategori produk | Office Supplies, Technology, Furniture |
-| Product Container | VARCHAR | Jenis packaging | |
-| Ship Mode | VARCHAR | Metode pengiriman | |
-| Cost Price | DECIMAL | Harga beli per unit (COGS) | AUD |
-| Retail Price | DECIMAL | Harga jual per unit | AUD |
-| Profit Margin | DECIMAL | Retail Price − Cost Price per unit | AUD, bisa negatif |
-| Order Quantity | INTEGER | Jumlah item dipesan | |
+| Order Priority | VARCHAR | Order priority | Low, Medium, High, Critical |
+| Product Name | VARCHAR | Product name | |
+| Product Category | VARCHAR | Product category | Office Supplies, Technology, Furniture |
+| Product Container | VARCHAR | Packaging type | |
+| Ship Mode | VARCHAR | Shipping method | |
+| Cost Price | DECIMAL | Cost price per unit (COGS) | AUD |
+| Retail Price | DECIMAL | Retail price per unit | AUD |
+| Profit Margin | DECIMAL | Retail Price − Cost Price per unit | AUD, can be negative |
+| Order Quantity | INTEGER | Quantity of items ordered | |
 | Sub Total | DECIMAL | Retail Price × Order Quantity | Gross Revenue |
-| Discount Percentage | DECIMAL | % diskon yang diberikan | 0–1 format |
+| Discount Percentage | DECIMAL | % discount given | 0–1 format |
 | Discount Dollar | DECIMAL | Sub Total × Discount % | AUD |
 | Order Total | DECIMAL | Sub Total − Discount Dollar | Net revenue after discount |
-| Shipping Cost | DECIMAL | Biaya pengiriman ditanggung bisnis | AUD |
+| Shipping Cost | DECIMAL | Shipping cost borne by business | AUD |
 | Total | DECIMAL | Order Total − Shipping Cost | Net revenue after all deductions |
 
 ---
@@ -61,13 +61,13 @@ Proyek ini meneliti apakah revenue yang tinggi benar-benar berujung pada profita
  
 **Key Issues Found:**
  
-| Masalah | Tindakan yang Diambil |
+| Issue | Action Taken |
 | :--- | :--- |
-| Semua kolom keuangan tersimpan sebagai teks dengan simbol `$` dan `,` | Dikonversi menjadi tipe numerik melalui Power Query |
-| Kolom tanggal tersimpan sebagai string (teks) | Dikonversi menjadi tipe *DATE* (tanggal) |
-| 4 kolom turunan (*Sub Total*, *Discount $*, *Order Total*, *Total*) memiliki ketidaksesuaian matematis di hampir ~99% baris | Dihitung ulang menggunakan data input mentah yang valid |
-| 1 baris kosong seutuhnya | Dihapus / Dibuang |
-| 4 baris: Harga Modal (*Cost Price*) > Harga Jual (*Retail Price*) namun memiliki Margin Keuntungan positif (kontradiksi matematis) | Margin dihitung ulang — menghasilkan nilai negatif, tetap dipertahankan sebagai temuan bisnis yang valid |
+| All financial columns stored as text with `$` and `,` | Converted to numeric type via Power Query |
+| Date columns stored as strings (text) | Converted to DATE type |
+| 4 derived columns (*Sub Total*, *Discount $*, *Order Total*, *Total*) had mathematical inconsistencies across ~99% of rows | Recalculated using valid raw input data |
+| 1 completely blank row | Removed / Deleted |
+| 4 rows: Cost Price > Retail Price but with positive Profit Margin (mathematical contradiction) | Margin recalculated — resulted in negative values, kept as a valid business finding |
 
 **Before vs After:**
 ```
@@ -76,8 +76,8 @@ Math Consistency  : 0.76% → 99.98%
 Null Values       : 1 blank row → 0
 ```
  
-> 💡 **Catatan Keputusan Pembersihan (Data Cleaning):**
-> Kolom *Sub Total*, *Discount Dollar*, *Order Total*, dan *Total* memiliki ketidaksesuaian matematis yang terjadi hampir di seluruh data — kemungkinan besar disebabkan oleh kesalahan input data (*data entry errors*) pada sistem sumber. Keempat kolom turunan tersebut dihitung ulang dari input mentah (Harga Jual, Jumlah Pesanan, % Diskon, Biaya Pengiriman) yang setelah diverifikasi terbukti memiliki tingkat konsistensi sebesar 99,56%.
+> 💡 **Data Cleaning Decision Note:**
+> Sub Total, Discount Dollar, Order Total, and Total columns had near-universal mathematical inconsistencies — likely caused by data entry errors at the source system. All four derived columns were recalculated from raw inputs (Retail Price, Quantity, Discount %, Shipping Cost) which proved 99.56% consistent after verification.
 
 ---
 
@@ -85,34 +85,36 @@ Null Values       : 1 blank row → 0
  
 ```
 1. Revenue $5.19M — Net Profit $2.14M (41.2% margin)
-   Gap 58.8% tergerus oleh COGS, discount, dan shipping.
- 
-2. Furniture memiliki gross margin tertinggi (51.4%)
-   tapi leakage rate tertinggi (14.5%) — masalah ada
-   di discount + shipping policy, bukan produknya.
- 
-3. Furniture × Corporate dan × Consumer sama-sama
-   14.8% leakage rate → Corporate dominant buyer
-   (92 orders) dengan avg shipping cost tertinggi ($4.97).
- 
-4. Corporate berkontribusi 34.4% net profit —
-   tapi dengan leakage yang ada, angka ini
-   belum optimal.
- 
-5. 7 produk (1.5% SKU) menopang 50% gross profit
-   → high concentration risk.
+58.8% gap eroded by COGS, discount, and shipping.
+
+2. Furniture has the highest gross margin (51.4%)
+but the highest leakage rate (14.5%) — the issue is
+in the discount + shipping policy, not the product.
+
+3. Furniture × Corporate and × Consumer both have a
+14.8% leakage rate → Corporate is the dominant buyer
+(92 orders) with the highest avg shipping cost ($4.97).
+
+4. Corporate contributes 34.4% net profit —
+but with the existing leakage, this number
+is not yet optimal.
+
+5. 7 products (1.5% SKU) support 50% of gross profit
+→ high concentration risk.
 ```
  
 ---
  
 ## Recommendations
  
+## Recommendations
+ 
 | Priority | Action |
 |---|---|
-| 🔴 High | Revisi Discount Policy untuk Kategori Produk Furniture × Corporate & Consumer. Discount yang diberikan ke Corporate dan Consumer di Furniture tidak mempertimbangkan bahwa kategori ini sudah punya structural cost disadvantage dari shipping. Solusinya bukan menghapus diskon, tapi menyesuaikan maximum discount % untuk Furniture dengan memasukkan "cost to serve" (shipping) sebagai variabel dalam formula diskon. Expected impactnya: Reduce Furniture leakage dari 14.5% ke <11%. 
-| 🟡 Medium | Diversifikasi dari Long Tail ke Core. Dari 436 produk di Long Tail, identifikasi produk mana yang memiliki margin tertinggi tapi volume rendah. Berikan push promosi atau visibility lebih ke produk-produk ini agar secara volume bisa meningkat dan "naik kelas" ke Core. Expected Impactnya: Diversifikasi profit base dari 7 ke 15+ produk. 
-| 🟡 Medium | Protect The Head. 7 produk yang generate 50% profit harus diprioritaskan dalam hal: ketersediaan stok, SLA pengiriman, dan tidak dijadikan subjek eksperimen diskon agresif. Once ada gangguan di level ini langsung terasa ke bottom line. Expected Impact: Melindungi $1.17M gross profit (The Head) dari disruption. 
- 
+| 🔴 High | Revise Discount Policy for Furniture × Corporate & Consumer Product Categories. The discounts given to Corporate and Consumer in Furniture do not consider that this category already has a structural cost disadvantage from shipping. The solution is not to eliminate discounts, but to adjust the maximum discount % for Furniture by including "cost to serve" (shipping) as a variable in the discount formula. Expected impact: Reduce Furniture leakage from 14.5% to <11%. |
+| 🟡 Medium | Diversify from Long Tail to Core. From 436 products in the Long Tail, identify which products have the highest margin but low volume. Provide promotional push or more visibility to these products so that they can increase in volume and "move up" to Core. Expected Impact: Diversify profit base from 7 to 15+ products. |
+| 🟡 Medium | Protect The Head. The 7 products that generate 50% profit must be prioritized in terms of: stock availability, shipping SLA, and not being subjected to aggressive discount experiments. Once there is a disruption at this level, it will be immediately felt on the bottom line. Expected Impact: Protect $1.17M gross profit (The Head) from disruption. |
+
 ---
  
 ## Analysis Method
