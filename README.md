@@ -21,6 +21,7 @@ Each project in this repository is carefully organized into self-contained direc
 * **LinkedIn:** https://linkedin.com/in/iksantri
 * **Medium Data Blog:** https://medium.com/@iksantri
 * **Notion:** https://sumptuous-mangosteen-dbc.notion.site/Iksan-Tri-Yuniansyah-Portfolio-7400d55f81f58297bdc7018deb11f536?pvs=73
+* **Tableau Public:** https://public.tableau.com/app/profile/iksan.tri.yuniansyah/vizzes
 * **Instagram:** https://www.instagram.com/_ixannn
 
 ---
