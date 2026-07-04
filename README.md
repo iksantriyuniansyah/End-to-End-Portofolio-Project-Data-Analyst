@@ -1,34 +1,32 @@
-# 📊 Data Analytics Portfolio Projects
+# 📊 Data Analytics End-to-End Portfolio Projects
 
-Welcome to my data analytics repository! This space serves as a curated catalog of end-to-end data analyst projects designed to bridge raw technical queries with strategic, board-level business recommendations.
+Welcome to my data analysis project portfolio repository! This space serves as a curated catalog of data analysis projects from start to finish focused on the role of a commercial data analyst. It is designed to showcase how I analyze data, starting with key business challenges and raw data, and culminating in data-driven insights and recommendations, complete with the tools I use and other technical documentation.
 
-Every project housed inside this repository is meticulously organized into self-contained directories containing its own cleaned datasets, standalone SQL execution files, interactive dashboard frameworks, and dedicated business insight write-ups.
+Each project in this repository is carefully organized into self-contained directories containing cleaned datasets, SQL execution files, interactive dashboards, and business insight reports.
 
 ---
 
-## 🛠️ My Core Competencies Toolkit
+## 🛠️ My Competencies Toolkit
 1. Excel Power Query
-2. Google Sheets Query
+2. Google Sheets
 3. SQL
-4. Tableau
+4. PowerBI
 5. Google Looker Studio
-6. Python Pandas
+6. Tableau 
+7. Python Pandas
 
 ---
 
 ## 📫 Let's Connect!
-* **LinkedIn:** Iksan Tri Yuniansyah(https://linkedin.com/in/iksantri)
-* **Medium Data Blog:** Iksan Tri Yuniansyah(https://medium.com/@iksantri)
+* **LinkedIn:** https://linkedin.com/in/iksantri
+* **Medium Data Blog:** https://medium.com/@iksantri
+* **Notion:** https://sumptuous-mangosteen-dbc.notion.site/Iksan-Tri-Yuniansyah-Portfolio-7400d55f81f58297bdc7018deb11f536?pvs=73
+* **Instagram:** https://www.instagram.com/_ixannn
 
 ---
 
 ## 📂 Project Catalog & Directory
 
 ### 1. Product Profitability & Margin Leakage Analysis
-* **Business Problem:** Retail management uses revenue as the primary performance indicator, even though revenue does not reflect actual profitability. Business resources (stocking budget, discounts, shipping priorities) are allocated based on who buys the most, not who is the most profitable.
-* **Method Analysis:** Product Profitability Analysis, Pareto Analysis (80/20), Profit Leakage Analysis, Customer Segment Profitability
-* **Data Cleaning/Transformation:** Excel Power Query
-* **Exploratory Data Analysis:** Advanced SQL (Complex CTEs, Window Functions, Aggregate Joins, Subqueries)
-* **Business Intelligence (BI):** Interactive Dashboarding via Tableau Desktop (Nested Layout Containers, LOD Expressions, Parameter Actions, Dynamic Visibility) 
-
+### 2. Customer Satisfaction Analysis
 
