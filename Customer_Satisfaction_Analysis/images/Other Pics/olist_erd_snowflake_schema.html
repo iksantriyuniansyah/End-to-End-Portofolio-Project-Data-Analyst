@@ -1,0 +1,174 @@
+
+<style>
+#erd-wrap { padding: 1rem 0; }
+#erd-wrap svg { width: 100% !important; max-width: 100%; }
+.erd-note { font-size: 12px; color: var(--color-text-secondary); margin-top: 12px; line-height: 1.6; }
+.erd-legend { display: flex; gap: 20px; flex-wrap: wrap; margin: 10px 0 16px; font-size: 12px; color: var(--color-text-secondary); align-items: center; }
+.erd-legend span { display: flex; align-items: center; gap: 6px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.dot-fact { background: #185FA5; }
+.dot-dim { background: #0F6E56; }
+.dot-lookup { background: #854F0B; }
+</style>
+
+<div id="erd-wrap">
+  <div class="erd-legend">
+    <span><span class="dot dot-fact"></span> Fact / Transaction table</span>
+    <span><span class="dot dot-dim"></span> Dimension table</span>
+    <span><span class="dot dot-lookup"></span> Lookup / Reference table</span>
+  </div>
+  <div id="erd"></div>
+  <div class="erd-note">
+    <strong>Grain notes:</strong>
+    orders = 1 row per order &nbsp;|&nbsp;
+    order_items = 1 row per item (1 order bisa multi-item) &nbsp;|&nbsp;
+    order_reviews = 1 row per review (547 order punya >1 review) &nbsp;|&nbsp;
+    order_payments = 1 row per payment method per order &nbsp;|&nbsp;
+    customers = customer_id unik per order — gunakan customer_unique_id untuk repeat purchase analysis
+  </div>
+</div>
+
+<script type="module">
+import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs';
+const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+await document.fonts.ready;
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  fontFamily: '"Anthropic Sans", sans-serif',
+  themeVariables: {
+    darkMode: dark,
+    fontSize: '12px',
+    fontFamily: '"Anthropic Sans", sans-serif',
+    lineColor: dark ? '#9c9a92' : '#73726c',
+    textColor: dark ? '#c2c0b6' : '#3d3d3a',
+    primaryColor: dark ? '#0C447C' : '#E6F1FB',
+    primaryTextColor: dark ? '#B5D4F4' : '#0C447C',
+    primaryBorderColor: dark ? '#185FA5' : '#185FA5',
+    secondaryColor: dark ? '#085041' : '#E1F5EE',
+    secondaryTextColor: dark ? '#9FE1CB' : '#085041',
+    secondaryBorderColor: dark ? '#0F6E56' : '#0F6E56',
+    tertiaryColor: dark ? '#633806' : '#FAEEDA',
+    tertiaryTextColor: dark ? '#FAC775' : '#633806',
+    tertiaryBorderColor: dark ? '#854F0B' : '#854F0B',
+  },
+});
+
+const diagram = `erDiagram
+    orders {
+        string order_id PK
+        string customer_id FK
+        string order_status
+        datetime order_purchase_timestamp
+        datetime order_approved_at
+        datetime order_delivered_carrier_date
+        datetime order_delivered_customer_date
+        datetime order_estimated_delivery_date
+    }
+    customers {
+        string customer_id PK
+        string customer_unique_id
+        string customer_zip_code_prefix FK
+        string customer_city
+        string customer_state
+    }
+    order_items {
+        string order_id FK
+        int order_item_id
+        string product_id FK
+        string seller_id FK
+        datetime shipping_limit_date
+        float price
+        float freight_value
+    }
+    order_reviews {
+        string review_id PK
+        string order_id FK
+        int review_score
+        string review_comment_title
+        string review_comment_message
+        datetime review_creation_date
+        datetime review_answer_timestamp
+    }
+    order_payments {
+        string order_id FK
+        int payment_sequential
+        string payment_type
+        int payment_installments
+        float payment_value
+    }
+    products {
+        string product_id PK
+        string product_category_name FK
+        int product_name_lenght
+        int product_description_lenght
+        int product_photos_qty
+        float product_weight_g
+        float product_length_cm
+        float product_height_cm
+        float product_width_cm
+    }
+    sellers {
+        string seller_id PK
+        string seller_zip_code_prefix FK
+        string seller_city
+        string seller_state
+    }
+    geolocation {
+        string geolocation_zip_code_prefix PK
+        float geolocation_lat
+        float geolocation_lng
+        string geolocation_city
+        string geolocation_state
+    }
+    product_category_name_translation {
+        string product_category_name PK
+        string product_category_name_english
+    }
+
+    orders ||--o{ order_items : "contains"
+    orders ||--o{ order_reviews : "receives"
+    orders ||--o{ order_payments : "paid via"
+    orders }o--|| customers : "placed by"
+    order_items }o--|| products : "references"
+    order_items }o--|| sellers : "fulfilled by"
+    products }o--o| product_category_name_translation : "translated by"
+    customers }o--o| geolocation : "located at"
+    sellers }o--o| geolocation : "located at"
+`;
+
+try {
+  const { svg } = await mermaid.render('erd-svg-main', diagram);
+  document.getElementById('erd').innerHTML = svg;
+
+  await new Promise(r => setTimeout(r, 100));
+
+  document.querySelectorAll('#erd svg .node').forEach(node => {
+    const firstPath = node.querySelector('path[d]');
+    if (!firstPath) return;
+    const d = firstPath.getAttribute('d');
+    const nums = d.match(/-?[\d.]+/g)?.map(Number);
+    if (!nums || nums.length < 8) return;
+    const xs = [nums[0], nums[2], nums[4], nums[6]];
+    const ys = [nums[1], nums[3], nums[5], nums[7]];
+    const x = Math.min(...xs), y = Math.min(...ys);
+    const w = Math.max(...xs) - x, h = Math.max(...ys) - y;
+    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    rect.setAttribute('x', x); rect.setAttribute('y', y);
+    rect.setAttribute('width', w); rect.setAttribute('height', h);
+    rect.setAttribute('rx', '8');
+    for (const a of ['fill', 'stroke', 'stroke-width', 'class', 'style']) {
+      if (firstPath.hasAttribute(a)) rect.setAttribute(a, firstPath.getAttribute(a));
+    }
+    firstPath.replaceWith(rect);
+  });
+
+  document.querySelectorAll('#erd svg .row-rect-odd path, #erd svg .row-rect-even path').forEach(p => {
+    p.setAttribute('stroke', 'none');
+  });
+
+} catch(e) {
+  document.getElementById('erd').innerHTML = '<p style="color:var(--color-text-secondary);font-size:13px;padding:1rem 0">ERD rendering gagal — coba refresh halaman.</p>';
+  console.error(e);
+}
+</script>
