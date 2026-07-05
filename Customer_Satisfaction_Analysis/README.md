@@ -195,7 +195,7 @@ The median (5.0) sits higher than the mean (4.09), confirming a heavily **left-s
 | May 2018 (Recovery) | 4.24 | 10.91% |
 | Aug 2018 (End of Period) | 4.29 | 10.04% |
 
-**Insight:** The trend is highly volatile rather than linear. The business faced a distinct 4-month operational crisis (Dec 2017 – Apr 2018) before bouncing back. Evaluating satisfaction on an annualized basis obscures these critical operational dips.
+**Insight:** The trend over those 20 months was not a straight line, the satisfaction level remained stable at 4.2–4.3 throughout 2017, then began to show signs of decline in December 2017. Dropping sharply to a low of 3.79 in March 2018 as the Detractor rate more than doubled to exceed 21%, before rebounding to 4.2 within two months by May 2018.
 
 **BQ2 — Highest Detractor Rates by Product Category**
 
@@ -207,7 +207,7 @@ The median (5.0) sits higher than the mean (4.09), confirming a heavily **left-s
 | Home Comfort | 18.56% | 90.46% | Driven by non-delivery issues |
 | Bed & Bath | 15.90% | 92.73% | Driven by non-delivery issues |
 
-**Insight:** The highest detractor rates are concentrated in high-volume mainstream categories rather than obscure niches. Men's Fashion, Office Furniture, and Audio lead the top 10 categories with detractor concentrations between 21% and 22%.
+**Insight:** Men’s Clothing, Audio, and Office Furniture are the three categories with the highest Detractor Rates (21–22%) among the top 10 Detractor Rates by product category. these are not “niche” categories, Office Furniture, for example, had 1,237 orders.
 
 **BQ3 — The Impact of Delivery Delays on Review Scores**
 
@@ -218,7 +218,7 @@ The median (5.0) sits higher than the mean (4.09), confirming a heavily **left-s
 | Late 4–7 Days | 2.11 | −2.19 | 67.51% |
 | Late >7 Days | 1.70 | −2.60 | 79.30% |
 
-**Insight:** A distinct **cliff point** occurs at the 4-day delay mark. The detractor rate more than doubles when moving from "1–3 days late" to "4–7 days late" (32.08% → 67.51%). This jump is far steeper than the transition from a 4–7 day delay to a >7 day delay, showing that customer patience breaks quickly after 3 days.
+**Insight:** The decline isn't linear, the sharpest jump happens not past 7 days, but between 1–3 and 4–7 days late, where Detractor Rate more than doubles (32% → 67.5%) and average score falls over a full point.
 
 **BQ4 — Repeat Purchase Rate by Satisfaction Tier**
 
@@ -228,7 +228,7 @@ The median (5.0) sits higher than the mean (4.09), confirming a heavily **left-s
 | Passive | 7,647 | 3.23% |
 | Detractor | 11,852 | 3.12% |
 
-**Insight:** While the directional hypothesis holds true (Promoter > Passive > Detractor), the actual variance is tiny (0.20 percentage points). Within this dataset, satisfaction alone is not a strong standalone predictor of customer retention.
+**Insight:** Promoters do edge out Detractors in repeat purchase rate but by only 0.20 percentage points, far below the "satisfied customers are far more loyal" assumption. There are correlation from that, just too weak to justify satisfaction alone as a retention strategy. Price, promos, and habit likely matter just as much.
 
 ### Layer 5 — Data-Driven Hypothesis Validation
 
