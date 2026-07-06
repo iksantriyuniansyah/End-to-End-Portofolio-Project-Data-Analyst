@@ -242,7 +242,3 @@ The median (5.0) sits higher than the mean (4.09), confirming a heavily **left-s
 * **Establish a strict operational SLA targeting a maximum delay threshold of under 4 days**, rather than settling for generic "on-time" shipping metrics. Because customer sentiment drops drastically after day 3, logistics investments yield the highest returns when focused on capping delays before they cross this 4-day threshold.
 * **Transition to monthly review score monitoring** instead of quarterly or annual reviews. This ensures sharp operational disruptions—like the March 2018 drop—are caught and resolved in real time.
 * **Decouple the retention strategy from customer satisfaction metrics alone.** Given the surprisingly weak link between high satisfaction and repeat purchases, the company must launch dedicated retention initiatives (e.g., structured loyalty tiers, personalized re-engagement incentives) instead of assuming happy customers will return automatically.
-
----
-
-*This technical documentation forms part of an end-to-end Customer Satisfaction Analysis portfolio project. The full MySQL EDA queries, comprehensive cleaning scripts, and interactive Tableau workbooks are accessible in the linked GitHub repository.*
