@@ -13,7 +13,7 @@ Each project in this repository is carefully organized into self-contained direc
 4. PowerBI
 5. Google Looker Studio
 6. Tableau 
-7. Python Pandas
+7. Python 
 
 ---
 
