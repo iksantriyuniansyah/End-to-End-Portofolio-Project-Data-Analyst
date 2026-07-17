@@ -17,7 +17,7 @@ DataCo faces two clear risk indicators: most orders arrive late, and profitabili
 
 ### 1.3 Business Questions
  
-**A. C-Level Lens (Profitability & Risk)**
+**A. Executive Lens (Profitability & Risk)**
 | # | Question | Key Columns |
 |---|---|---|
 | A1 | What are total Sales and Profit Margin, and what has been the trend over the past three years has it increasing, declining, or stagnant? | `sales`, `order_profit_per_order`, `order_date` |
@@ -26,7 +26,7 @@ DataCo faces two clear risk indicators: most orders arrive late, and profitabili
 | A4 | What is the estimated Revenue at Risk from the combination of negative-margin orders, excessive discounting, and problematic order statuses (fraud, cancellation, payment issues)? | `order_profit_per_order`, `order_item_discount_rate`, `order_status` |
 | A5 | How much overlap exists between Revenue at Risk and orders that experienced delivery delays? | `revenue_at_risk_flag`, `late_delivery_risk` |
  
-**B. Head of Operations Lens (Logistics Performance)**
+**B. Operations Lens (Logistics Performance)**
 | # | Question | Key Columns |
 |---|---|---|
 | B1 | What is the overall On-Time Delivery Rate, and how has been the trend over the past three years? | `late_delivery_risk`, `order_date` |
