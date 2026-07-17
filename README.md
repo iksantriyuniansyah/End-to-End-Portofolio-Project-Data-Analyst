@@ -28,6 +28,6 @@ Each project in this repository is carefully organized into self-contained direc
 
 ## 📂 Project Catalog & Directory
 
-### 1. Product Profitability & Margin Leakage Analysis
-### 2. Customer Satisfaction Analysis
+### 1. Product Profitability & Margin Leakage Analysis(https://github.com/iksantriyuniansyah/End-to-End-Portofolio-Project-Data-Analyst/tree/main/Product_Profitability%26Margin_Leakage_Analysis)
+### 2. Customer Satisfaction Analysis(https://github.com/iksantriyuniansyah/End-to-End-Portofolio-Project-Data-Analyst/tree/main/Customer_Satisfaction_Analysis)
 
